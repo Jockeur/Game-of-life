@@ -51,15 +51,11 @@ private int round = 0;
 	private void generateRandomCells(int x) {
 		Random random = new Random();
 		
-		List<String> cantPlace = new ArrayList<>();
-		
 		while(x > 0) {
 			int rx = random.nextInt(width);
 			int ry = random.nextInt(height);
 			
-			if(cantPlace.contains(rx+"-"+"ry")) continue;
-			
-			cantPlace.add(rx+"-"+ry);
+			if(cells[rx][ry]) continue;
 			
 			cells[rx][ry] = true;
 			
@@ -161,7 +157,6 @@ private int round = 0;
 	private static class Mouse implements MouseMotionListener, MouseListener{
 		
 		private final Main main;
-		private final Random random = new Random();
 		
 		private Mouse(Main main) {
 			this.main = main;
@@ -181,7 +176,7 @@ private int round = 0;
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			main.cells[random.nextInt(main.width)] [random.nextInt(main.height)] = true;
+			main.generateRandomCells(1000);
 		}
 
 		@Override
