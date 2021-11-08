@@ -39,6 +39,10 @@ private int round = 0;
 		frame.setContentPane(this);
 		frame.setBackground(Color.blue);
 		
+		Mouse mouse = new Mouse(this);
+		frame.addMouseListener(mouse);
+		frame.addMouseMotionListener(mouse);
+		
 		frame.setVisible(true);
 		
 		run();
@@ -102,26 +106,28 @@ private int round = 0;
 	
 	private void update() 
 	{
-		boolean[][] newCells = new boolean[width][height];
-		
-		for(int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				
-				int count = 0;
+		 boolean[][] newCells = new boolean[width][height];
 
-				for(int xo = -1; xo < 2; xo++) {
-					for (int yo =-1; yo < 2; yo++) {
-						
-						if (xo == 0 || yo == 0) continue;
-						int nx = x + xo;
-						int ny = y + yo;
-								
-						count += (nx >= 0 && ny > 0 && nx < width && ny < height && cells[nx][ny]) ? 1 : 0;
-					}
-				}
-				newCells[x][y] = cells[x][y] ? (count == 2 || count == 3) : count == 3;
-			}
-		}
+	        for(int x = 0; x < width; x++)
+	        {
+	            for(int y = 0; y < height; y++)
+	            {
+	                int count = 0;
+
+	                for(int xo = -1; xo < 2; xo++)
+	                {
+	                    for(int yo = -1; yo < 2; yo++)
+	                    {
+	                        if(xo == 0 && yo == 0) continue;
+	                        int nx = x +xo;
+	                        int ny = y + yo;
+	                        count += (nx >= 0 && ny > 0 && nx < width && ny < height && cells[nx][ny]) ? 1 : 0;
+	                    }
+	                }
+
+	                newCells[x][y] = cells[x][y] ? (count == 2 || count == 3) : count == 3;
+	            }
+	        }
 		
 		cells = newCells;
 		
@@ -149,13 +155,13 @@ private int round = 0;
 
 	public static void main(String... args) 
 	{
-		new Main(50, 50, 200);
+		new Main(50, 50, 600);
 	}
 	
 	private static class Mouse implements MouseMotionListener, MouseListener{
 		
 		private final Main main;
-		// private final random Random = new Random();
+		private final Random random = new Random();
 		
 		private Mouse(Main main) {
 			this.main = main;
@@ -175,7 +181,7 @@ private int round = 0;
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// main.cells[random.nextInt]
+			main.cells[random.nextInt(main.width)] [random.nextInt(main.height)] = true;
 		}
 
 		@Override
